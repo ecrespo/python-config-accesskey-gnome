@@ -141,9 +141,9 @@ class AccessGnomeConfig:
 	def __eliminacion(self,aplicacion):
 		if len(self.aplicaciones) >= 2:
 			for i in range(len(self.aplicaciones)):
-				print i, self.aplicaciones[i], self.aplicaciones
 				if self.aplicaciones[i] == aplicacion:
 					self.aplicaciones[i:i+1] = []
+					break
 				else:
 					continue
 		elif len(self.aplicaciones) == 1:
