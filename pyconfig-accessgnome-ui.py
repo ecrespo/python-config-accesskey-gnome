@@ -1,6 +1,21 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""
+Name: pyconfig-accessgnome-uy
+Description: Aplicación gráfica que permite configurar los accesos rápidos de teclado a gconf
+Version:0.1
+License: GPLv3
+Copyright: Copyright (C) 2009  Libre Accesibilidad
+Author: Ernesto Nadir Crespo Avila
+Email: ecrespo@gmail.com
+
+"""
+
+
+
+
+
 import gtk,configGconf
 
 
