@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import gtk
+import gtk,configGconf
+
 
 
 class AccessGnomeConfig:
@@ -196,6 +197,8 @@ class AccessGnomeConfig:
 	
 	def on_button2_clicked(self,*args):
 		print self.aplicaciones
+		Config = configGconf.Conf()
+		Config.modificar_opcion(self.aplicaciones)
 	
 	def main(self):
 		gtk.main()
