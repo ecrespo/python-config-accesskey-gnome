@@ -57,8 +57,8 @@ class Conf:
             ruta1 =  "%s%s" %(self.__comando,cont)
             ruta2 = "%s%s"  %(self.__asignacion_teclado,cont)
             #Se modifica gconf
-            self.gconfClient.set_string(ruta1, "%s" %aplicacion)
-            self.gconfClient.set_string(ruta2, "%s" %self.__teclas[aplicacion])
+            self.__gconfClient.set_string(ruta1, "%s" %aplicacion)
+            self.__gconfClient.set_string(ruta2, "%s" %self.__teclas[aplicacion])
             #Se imprime en pantalla los cambios logrados.
             print "Configurando aplicacion: %s, acceso teclado: %s" %(aplicacion,self.__teclas[aplicacion])
             cont = cont +1
