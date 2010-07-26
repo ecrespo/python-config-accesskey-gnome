@@ -87,10 +87,6 @@ if __name__ == "__main__":
     import argparse
     #Se instancia la clase Conf en el objeto config
     config = Conf()
-    #Se define como global a la variable opciones
-    global opciones
-    #opciones contiene las claves del diccionario teclas
-    opciones = config.teclas.keys()    
     #Creación del parse 
     parser = argparse.ArgumentParser(prog='configGconf',description="Cambiar accesos rapidos en teclado a Gnome")
     #Se agrega las opciones accion, distribucion y version.    
