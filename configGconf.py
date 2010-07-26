@@ -26,14 +26,14 @@ import gconf
 class Conf:
     def __init__(self):
         #Se crea la instancia de la clase de gconf
-        self.gconfClient = gconf.client_get_default()
+        self.__gconfClient = gconf.client_get_default()
         #Se crea la tupĺa aplicaciones        
-        self.aplicaciones = ("orca", "gnome-terminal","oowriter","iceweasel","nautilus","ooimpress","pidgin","oocalc","gedit","gnome-calculator","rhythmbox")
+        self.__aplicaciones = ("orca", "gnome-terminal","oowriter","iceweasel","nautilus","ooimpress","pidgin","oocalc","gedit","gnome-calculator","rhythmbox")
         #Se crea la ruta del comando del teclado y la ruta del modificador de teclado
-        self.comando = "/apps/metacity/keybinding_commands/command_"
-        self.asignacion_teclado = "/apps/metacity/global_keybindings/run_command_"
+        self.__comando = "/apps/metacity/keybinding_commands/command_"
+        self.__asignacion_teclado = "/apps/metacity/global_keybindings/run_command_"
         #Se crea un diccionario teclas con la asociación entre la aplicación y su acceso rápido de teclado
-        self.teclas = {"orca":"<Super>o","gnome-terminal":"<Super>t","oowriter":"<Super>w","iceweasel":"<Super>n","nautilus":"<Super>h","ooimpress":"<Super>i","pidgin":"<Super>p","oocalc":"<Super>x","gedit":"<Super>e","gnome-calculator":"<Super>c","rhythmbox":"<Super>m"}
+        self.__teclas = {"orca":"<Super>o","gnome-terminal":"<Super>t","oowriter":"<Super>w","iceweasel":"<Super>n","nautilus":"<Super>h","ooimpress":"<Super>i","pidgin":"<Super>p","oocalc":"<Super>x","gedit":"<Super>e","gnome-calculator":"<Super>c","rhythmbox":"<Super>m"}
 
         
 
@@ -49,18 +49,18 @@ class Conf:
         print "________________________________________________"
         #Se la distribución no es debian se cambia iceweasel por firefox en las variables aplicaciones y teclas.
         if args.distribucion <> "debian":
-            self.aplicaciones = ("orca", "gnome-terminal","oowriter","firefox","nautilus","ooimpress","pidgin","oocalc","gedit","gnome-calculator","rhythmbox")
-            self.teclas = {"orca":"<Super>o","gnome-terminal":"<Super>t","oowriter":"<Super>w","firefox":"<Super>n","nautilus":"<Super>h","ooimpress":"<Super>i","pidgin":"<Super>p","oocalc":"<Super>x","gedit":"<Super>e","gnome-calculator":"<Super>c","rhythmbox":"<Super>m"}
+            self.__aplicaciones = ("orca", "gnome-terminal","oowriter","firefox","nautilus","ooimpress","pidgin","oocalc","gedit","gnome-calculator","rhythmbox")
+            self.__teclas = {"orca":"<Super>o","gnome-terminal":"<Super>t","oowriter":"<Super>w","firefox":"<Super>n","nautilus":"<Super>h","ooimpress":"<Super>i","pidgin":"<Super>p","oocalc":"<Super>x","gedit":"<Super>e","gnome-calculator":"<Super>c","rhythmbox":"<Super>m"}
         #Se genera un ciclo según las aplicaciones
-        for aplicacion in self.aplicaciones:
+        for aplicacion in self.__aplicaciones:
             #Definición de las rutas del gconf del comando y del modificador del teclado
-            ruta1 =  "%s%s" %(self.comando,cont)
-            ruta2 = "%s%s"  %(self.asignacion_teclado,cont)
+            ruta1 =  "%s%s" %(self.__comando,cont)
+            ruta2 = "%s%s"  %(self.__asignacion_teclado,cont)
             #Se modifica gconf
             self.gconfClient.set_string(ruta1, "%s" %aplicacion)
-            self.gconfClient.set_string(ruta2, "%s" %self.teclas[aplicacion])
+            self.gconfClient.set_string(ruta2, "%s" %self.__teclas[aplicacion])
             #Se imprime en pantalla los cambios logrados.
-            print "Configurando aplicacion: %s, acceso teclado: %s" %(aplicacion,self.teclas[aplicacion])
+            print "Configurando aplicacion: %s, acceso teclado: %s" %(aplicacion,self.__teclas[aplicacion])
             cont = cont +1
     
     
@@ -72,13 +72,13 @@ class Conf:
         print "Listar accesos rapidos del teclado a gconf"
         print "________________________________________________"
         #Se crea un ciclo según la lista de aplicaciones
-        for aplicacion in self.aplicaciones:
+        for aplicacion in self.__aplicaciones:
             #Se define la ruta del comando del teclado según gconf
-            ruta1 =  "%s%s" %(self.comando,cont)
+            ruta1 =  "%s%s" %(self.__comando,cont)
             #Se define la ruta del modificador del teclado
-            ruta2 = "%s%s"  %(self.asignacion_teclado,cont)
+            ruta2 = "%s%s"  %(self.__asignacion_teclado,cont)
             #Se desplega en pantalla 
-            print "Aplicación: " ,self.gconfClient.get_string(ruta1),self.gconfClient.get_string(ruta2)
+            print "Aplicación: " ,self.__gconfClient.get_string(ruta1),self.__gconfClient.get_string(ruta2)
             cont = cont +1
 
 
