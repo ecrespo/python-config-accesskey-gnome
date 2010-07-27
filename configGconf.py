@@ -3,7 +3,7 @@
 """
 Name: configGconf
 Description: Aplicación y módulo que permite modificar los accesos rápido de teclas a programas
-Version:0.3
+Version:0.4
 License: GPLv3
 Copyright: Copyright (C) 2009  Distrito Socialista Tecnologico AIT PDVSA Mérida
 Author: Ernesto Nadir Crespo Avila
@@ -13,8 +13,9 @@ Changelog:
  0.2: * Agregada opción de selección de distribución debian, ubuntu o canaima.
       * Agregada información adicional a la hora de desplegar en pantalla.
  0.3: * Agregado el uso del módulo argparse para simplificar la captura de argumentos del comando.
+ 0.4: * Agregada la posibilidad de modificar una sóla opción de las teclas rápidas de gconf.
 """
-__version = "0.3"
+__version = "0.4"
 __autor = "Ernesto Nadir Crespo Avila"
 __email = "ecrespo@gmail.com"
 __copyright = "GPLv3"
@@ -35,9 +36,21 @@ class Conf:
         #Se crea un diccionario teclas con la asociación entre la aplicación y su acceso rápido de teclado
         self.__teclas = {"orca":"<Super>o","gnome-terminal":"<Super>t","oowriter":"<Super>w","iceweasel":"<Super>n","nautilus":"<Super>h","ooimpress":"<Super>i","pidgin":"<Super>p","oocalc":"<Super>x","gedit":"<Super>e","gnome-calculator":"<Super>c","rhythmbox":"<Super>m"}
 
-        
-
-        
+    def modificar_opcion(self,opcion):
+        cont = 1
+        #se genera un ciclo con las aplicaciones existentes
+        for aplicacion in self.__aplicaciones:
+            #Si la opción existe como aplicación se modifica el gconf, si no se sale sin resultado
+            if aplicacion == opcion:
+                ruta1 = "%s%s" %(self.__comando,cont)
+                ruta2 = "%s%s" %(self.__asignacion_teclado,cont)
+                self.__gconfClient.set_string(ruta1, "%s" %aplicacion)
+                self.__gconfClient.set_string(ruta2, "%s" %self.__teclas[aplicacion])
+                #Se imprime en pantalla los cambios logrados.
+                print "Configurando aplicacion: %s, acceso teclado: %s" %(aplicacion,self.__teclas[aplicacion])
+                break
+            cont = cont+1
+    
     def modificar(self,distribucion):
         """
         modificar: Permite modificar los accesos rápidos del teclado
@@ -89,9 +102,13 @@ if __name__ == "__main__":
     config = Conf()
     #Creación del parse 
     parser = argparse.ArgumentParser(prog='configGconf',description="Cambiar accesos rapidos en teclado a Gnome")
+    acciones = ["cambiar","listar","modificarOpcion"]
+    distribuciones = ["debian","canaima","ubuntu"]
+    aplicaciones = ["orca", "gnome-terminal","oowriter","iceweasel","nautilus","ooimpress","pidgin","oocalc","gedit","gnome-calculator","rhythmbox"]
     #Se agrega las opciones accion, distribucion y version.    
-    parser.add_argument('-a','--accion',type=str,choices=["cambiar","listar"],default=["cambiar","listar"],help='lista gconf')
-    parser.add_argument('-d','--distribucion',choices=["debian","ubuntu","canaima"],type=str,default=["debian","ubuntu","canaima"],help='seleccione entre Canaima,Debian y ubuntu')
+    parser.add_argument('-a','--accion',type=str,choices=acciones,default=acciones,help='lista gconf')
+    parser.add_argument('-d','--distribucion',choices=distribuciones,type=str,default=distribuciones,help='seleccione entre Canaima,Debian y ubuntu')
+    parser.add_argument('-o','--opcion',choices=aplicaciones,type=str,default=aplicaciones,help='Cambia la configuración de una opción')
     parser.add_argument('-v', '--version', action='version', version='%(prog)s 0.3')
     #Se captura los argumentos del comando ejecutado.
     args = parser.parse_args()
@@ -102,3 +119,10 @@ if __name__ == "__main__":
     elif args.distribucion in ('debian','ubuntu','canaima') and args.accion == "cambiar":
         #Se modifican las opciones de los accesos del teclado
         config.modificar(args.distribucion)
+    elif args.accion == "modificarOpcion":
+        #Permite modificar una opcion
+        config.modificar_opcion(args.opcion)
+    else:
+        #Si no se pasa ningún argumento se despliega la ayuda
+        parser.print_help()
+
