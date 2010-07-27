@@ -47,7 +47,7 @@ class AccessGnomeConfig:
 		self.__checkbutton9 = self.__glade.get_object('checkbutton9')
 		self.__checkbutton10 = self.__glade.get_object('checkbutton10')
 		self.__checkbutton11 = self.__glade.get_object('checkbutton11')
-		self.__checkbutton12 = self.__glade.get_object('checkbutton12')
+		#self.__checkbutton12 = self.__glade.get_object('checkbutton12')
 		self.__checkbutton13 = self.__glade.get_object('checkbutton13')
 		self.__aplicaciones = []
 		
@@ -69,7 +69,7 @@ class AccessGnomeConfig:
 		self.__checkbutton9.connect("toggled",self.on_checkbutton9_toggled)
 		self.__checkbutton10.connect("toggled",self.on_checkbutton10_toggled)
 		self.__checkbutton11.connect("toggled",self.on_checkbutton11_toggled)
-		self.__checkbutton12.connect("toggled",self.on_checkbutton12_toggled)
+		#self.__checkbutton12.connect("toggled",self.on_checkbutton12_toggled)
 		self.__checkbutton13.connect("toggled",self.on_checkbutton13_toggled)
 		#Config widgets
 		self.__window.set_title("Configuración de accesos rapidos de Aplicaciones en Gnome")
@@ -152,15 +152,16 @@ class AccessGnomeConfig:
 		else:
 			self.__eliminacion("gnome-terminal")
 			
-	def on_checkbutton12_toggled(self,*args):
-		pass
-		"""
+	"""def on_checkbutton12_toggled(self,*args):
+    
+		
 		variable = self.__checkbutton12.get_active()
 		if  variable == True:
 			print "daltonicos"
 		else:
 			print "nada de daltonicos"
-		"""
+		
+    """
 	def __eliminacion(self,aplicacion):
 		if len(self.__aplicaciones) >= 2:
 			for i in range(len(self.__aplicaciones)):
@@ -220,7 +221,7 @@ class AccessGnomeConfig:
 	def on_button2_clicked(self,*args):
 		Config = configGconf.Conf()
 		for aplicacion in self.__aplicaciones:
-			Config.modificar_opcion(aplicacion)
+			Config.modificar_opcion(aplicacion,1)
 	
 	def main(self):
 		gtk.main()
