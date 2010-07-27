@@ -206,16 +206,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkCheckButton" id="checkbutton12">
-                        <property name="label" translatable="yes">Applet para daltonicos     </property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="receives_default">False</property>
-                        <property name="draw_indicator">True</property>
-                      </object>
-                      <packing>
-                        <property name="position">1</property>
-                      </packing>
+                      <placeholder/>
                     </child>
                   </object>
                   <packing>
