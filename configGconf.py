@@ -36,7 +36,10 @@ class Conf:
         #Se crea un diccionario teclas con la asociación entre la aplicación y su acceso rápido de teclado
         self.__teclas = {"orca":"<Super>o","gnome-terminal":"<Super>t","oowriter":"<Super>w","iceweasel":"<Super>n","nautilus":"<Super>h","ooimpress":"<Super>i","pidgin":"<Super>p","oocalc":"<Super>x","gedit":"<Super>e","gnome-calculator":"<Super>c","rhythmbox":"<Super>m"}
 
-    def modificar_opcion(self,opcion):
+    def modificar_opcion(self,opcion,interfaz=0):
+        if interfaz == 0:
+            print "Listar accesos rapidos del teclado de gconf"
+            print "________________________________________________"
         cont = 1
         #se genera un ciclo con las aplicaciones existentes
         for aplicacion in self.__aplicaciones:
@@ -46,8 +49,9 @@ class Conf:
                 ruta2 = "%s%s" %(self.__asignacion_teclado,cont)
                 self.__gconfClient.set_string(ruta1, "%s" %aplicacion)
                 self.__gconfClient.set_string(ruta2, "%s" %self.__teclas[aplicacion])
-                #Se imprime en pantalla los cambios logrados.
-                print "Configurando aplicacion: %s, acceso teclado: %s" %(aplicacion,self.__teclas[aplicacion])
+                if interfaz == 0:
+                    #Se imprime en pantalla los cambios logrados.
+                    print "Configurando aplicacion: %s, acceso teclado: %s" %(aplicacion,self.__teclas[aplicacion])
                 break
             cont = cont+1
     
