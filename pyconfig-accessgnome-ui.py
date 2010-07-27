@@ -29,7 +29,7 @@ import gtk,configGconf
 
 class AccessGnomeConfig:
 	def __init__(self):
-		self.__glade_file = "ui.glade"
+		self.__glade_file = "pyconfig-accessgnome"
 		self.__glade = gtk.Builder()
 		self.__glade.add_from_file(self.__glade_file)
 		# get widgets
