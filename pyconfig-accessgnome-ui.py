@@ -31,24 +31,24 @@ class AccessGnomeConfig:
 	def __init__(self):
 		self.__glade_file = "ui.glade"
 		self.__glade = gtk.Builder()
-		self.__glade.add_from_file(self.glade_file)
+		self.__glade.add_from_file(self.__glade_file)
 		# get widgets
-		self.__window = self.glade.get_object('dialog1')
-		self.__button1 = self.glade.get_object('button1')
-		self.__button2 = self.glade.get_object('button2')
-		self.__checkbutton1 = self.glade.get_object('checkbutton1')
-		self.__checkbutton2 = self.glade.get_object('checkbutton2')
-		self.__checkbutton3 = self.glade.get_object('checkbutton3')
-		self.__checkbutton4 = self.glade.get_object('checkbutton4')
-		self.__checkbutton5 = self.glade.get_object('checkbutton5')
-		self.__checkbutton6 = self.glade.get_object('checkbutton6')
-		self.__checkbutton7 = self.glade.get_object('checkbutton7')
-		self.__checkbutton8 = self.glade.get_object('checkbutton8')
-		self.__checkbutton9 = self.glade.get_object('checkbutton9')
-		self.__checkbutton10 = self.glade.get_object('checkbutton10')
-		self.__checkbutton11 = self.glade.get_object('checkbutton11')
-		self.__checkbutton12 = self.glade.get_object('checkbutton12')
-		self.__checkbutton13 = self.glade.get_object('checkbutton13')
+		self.__window = self.__glade.get_object('dialog1')
+		self.__button1 = self.__glade.get_object('button1')
+		self.__button2 = self.__glade.get_object('button2')
+		self.__checkbutton1 = self.__glade.get_object('checkbutton1')
+		self.__checkbutton2 = self.__glade.get_object('checkbutton2')
+		self.__checkbutton3 = self.__glade.get_object('checkbutton3')
+		self.__checkbutton4 = self.__glade.get_object('checkbutton4')
+		self.__checkbutton5 = self.__glade.get_object('checkbutton5')
+		self.__checkbutton6 = self.__glade.get_object('checkbutton6')
+		self.__checkbutton7 = self.__glade.get_object('checkbutton7')
+		self.__checkbutton8 = self.__glade.get_object('checkbutton8')
+		self.__checkbutton9 = self.__glade.get_object('checkbutton9')
+		self.__checkbutton10 = self.__glade.get_object('checkbutton10')
+		self.__checkbutton11 = self.__glade.get_object('checkbutton11')
+		self.__checkbutton12 = self.__glade.get_object('checkbutton12')
+		self.__checkbutton13 = self.__glade.get_object('checkbutton13')
 		self.__aplicaciones = []
 		
 		
@@ -218,9 +218,9 @@ class AccessGnomeConfig:
 		gtk.main_quit()
 	
 	def on_button2_clicked(self,*args):
-		print self.__aplicaciones
 		Config = configGconf.Conf()
-		Config.modificar_opcion(self.__aplicaciones)
+		for aplicacion in self.__aplicaciones:
+			Config.modificar_opcion(aplicacion)
 	
 	def main(self):
 		gtk.main()
