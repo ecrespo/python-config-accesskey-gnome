@@ -284,4 +284,48 @@
       <action-widget response="0">button2</action-widget>
     </action-widgets>
   </object>
+  <object class="GtkWindow" id="mensaje">
+    <property name="type">popup</property>
+    <property name="resizable">False</property>
+    <property name="destroy_with_parent">True</property>
+    <property name="icon">pyconfiggnome-ui.png</property>
+    <signal name="destroy" handler="on_mensaje_destroy"/>
+    <child>
+      <object class="GtkVBox" id="vbox3">
+        <property name="visible">True</property>
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkLabel" id="etiqueta1">
+            <property name="visible">True</property>
+            <property name="label" translatable="yes">Accesos rapidos del teclado de gconf</property>
+          </object>
+          <packing>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="etiqueta2">
+            <property name="visible">True</property>
+            <property name="label" translatable="yes">Configurado los accesos r&#xE1;pidos</property>
+          </object>
+          <packing>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="continuar">
+            <property name="label">gtk-ok</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="use_stock">True</property>
+            <signal name="clicked" handler="on_continuar_clicked"/>
+          </object>
+          <packing>
+            <property name="position">2</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
 </interface>

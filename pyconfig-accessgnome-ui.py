@@ -50,9 +50,7 @@ class AccessGnomeConfig:
 		#self.__checkbutton12 = self.__glade.get_object('checkbutton12')
 		self.__checkbutton13 = self.__glade.get_object('checkbutton13')
 		self.__aplicaciones = []
-		
-		
-		
+        	
 		# signals
 		self.__window.connect ("close",self.on_dialog1_close)
 		self.__window.connect("destroy",self.on_dialog1_destroy)
@@ -74,7 +72,7 @@ class AccessGnomeConfig:
 		#Config widgets
 		self.__window.set_title("Configuración de accesos rapidos de Aplicaciones en Gnome")
 		self.__window.show_all()
-	
+			
 	def on_checkbutton1_toggled(self,*args):
 		variable = self.__checkbutton1.get_active()
 		if variable == True:
@@ -222,6 +220,9 @@ class AccessGnomeConfig:
 		Config = configGconf.Conf()
 		for aplicacion in self.__aplicaciones:
 			Config.modificar_opcion(aplicacion,1)
+
+    
+    
 	
 	def main(self):
 		gtk.main()
