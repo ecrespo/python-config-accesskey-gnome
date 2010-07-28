@@ -1,0 +1,99 @@
+python-config-accesskey-gnome 0.1
+
+Introducción
+
+Programa de línea de comandos y modo gráfico que permite configurar los accesos rápidos del teclado para gnome por medio de  gconf para las personas con discapacidad visual.
+
+
+Descargar python-config-accesskey-gnome:
+Para descargar pyloro tiene 2 opciones:
+1. Bajarlo del repositorio:
+mercurial  hg clone https://python-config-accesskey-gnome.googlecode.com/hg/ python-config-accesskey-gnome  
+2. Bajar el paquete fuente
+wget http://pyloro.googlecode.com/files/python-config-accesskey-gnome-0.1.tar.gz
+
+Requerimientos para la utilización del python-config-accesskey-gnome
+Para instalar y utilizar este programa se requiere los siguientes programas instalado en el equipo:
+*python-argparse
+
+Instalación
+Para instalar el programa se requiere que los programas anteriores se encuentren instalados. Los pasos para la construcción de python-config-accesskey-gnome e instalación son:
+1.Construcción
+Cambiarse al directorio de python-config-accesskey-gnome
+cd python-config-accesskey-gnome
+Ejecutar la construcción
+python setup.py build
+2.Para la instalación es necesario ejecutar el comando como root.
+python setup.py install
+
+Equipo de desarrollo:
+*Ernesto Crespo
+
+Página del proyecto:
+http://code.google.com/p/python-config-accesskey-gnome/
+
+
+Forma de Uso por línea de comando:
+
+1. Sin argumentos muestra la ayuda o con -h. 
+configGconf.py
+usage: configGconf [-h] [-a {cambiar,listar,modificarOpcion}]
+                   [-d {debian,canaima,ubuntu}]
+                   [-o {orca,gnome-terminal,oowriter,iceweasel,nautilus,ooimpress,pidgin,oocalc,gedit,gnome-calculator,rhythmbox}]
+                   [-v]
+
+Cambiar accesos rapidos en teclado a Gnome
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -a {cambiar,listar,modificarOpcion}, --accion {cambiar,listar,modificarOpcion}
+                        lista gconf
+  -d {debian,canaima,ubuntu}, --distribucion {debian,canaima,ubuntu}
+                        seleccione entre Canaima,Debian y ubuntu
+  -o {orca,gnome-terminal,oowriter,iceweasel,nautilus,ooimpress,pidgin,oocalc,gedit,gnome-calculator,rhythmbox}, --opcion {orca,gnome-terminal,oowriter,iceweasel,nautilus,ooimpress,pidgin,oocalc,gedit,gnome-calculator,rhythmbox}
+                        Cambia la configuración de una opción
+  -v, --version
+
+2. Para versión del programa se ejecuta.
+configGconf.py -v
+configGconf 0.3
+
+3. Para listar los accesos rápidos se ejecuta con la acción listar:
+configGconf.py -a listar
+Listar accesos rapidos del teclado a gconf
+________________________________________________
+Aplicación:  orca <Super>o
+Aplicación:  gnome-terminal <Super>t
+Aplicación:  oowriter <Super>w
+Aplicación:  iceweasel <Super>n
+Aplicación:  nautilus <Super>h
+Aplicación:  ooimpress <Super>i
+Aplicación:  pidgin <Super>p
+Aplicación:  oocalc <Super>x
+Aplicación:  gedit <Super>e
+Aplicación:  gnome-calculator <Super>c
+Aplicación:  rhythmbox <Super>m
+
+4. Para cambiar una opción se ejecuta con la opción modificarOpcion, se le pasa la distribución que se usa (debian,ubuntu,canaima) y la opción a modificar:
+configGconf.py -a modificarOpcion -o iceweasel -d debian
+Listar accesos rapidos del teclado de gconf
+________________________________________________
+Configurando aplicacion: iceweasel, acceso teclado: <Super>n
+
+5. Para cambiar todas las opciones se ejecuta con la acción cambiar y se define la distribución que se usa en el equipo:
+configGconf.py -a cambiar -d canaima 
+Listar accesos rapidos del teclado de gconf
+________________________________________________
+Configurando aplicacion: orca, acceso teclado: <Super>o
+Configurando aplicacion: gnome-terminal, acceso teclado: <Super>t
+Configurando aplicacion: oowriter, acceso teclado: <Super>w
+Configurando aplicacion: firefox, acceso teclado: <Super>n
+Configurando aplicacion: nautilus, acceso teclado: <Super>h
+Configurando aplicacion: ooimpress, acceso teclado: <Super>i
+Configurando aplicacion: pidgin, acceso teclado: <Super>p
+Configurando aplicacion: oocalc, acceso teclado: <Super>x
+Configurando aplicacion: gedit, acceso teclado: <Super>e
+Configurando aplicacion: gnome-calculator, acceso teclado: <Super>c
+Configurando aplicacion: rhythmbox, acceso teclado: <Super>m
+
+
