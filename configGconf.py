@@ -36,7 +36,22 @@ class Conf:
         #Se crea un diccionario teclas con la asociación entre la aplicación y su acceso rápido de teclado
         self.__teclas = {"orca":"<Super>o","gnome-terminal":"<Super>t","oowriter":"<Super>w","iceweasel":"<Super>n","nautilus":"<Super>h","ooimpress":"<Super>i","pidgin":"<Super>p","oocalc":"<Super>x","gedit":"<Super>e","gnome-calculator":"<Super>c","rhythmbox":"<Super>m"}
 
-    def modificar_opcion(self,opcion,interfaz=0):
+    def modificar_opcion(self,opciones,distribucion,interfaz=0):
+        if distribucion <> "debian":
+            self.__aplicaciones = ("orca", "gnome-terminal","oowriter","firefox","nautilus","ooimpress","pidgin","oocalc","gedit","gnome-calculator","rhythmbox")
+            self.__teclas = {"orca":"<Super>o","gnome-terminal":"<Super>t","oowriter":"<Super>w","firefox":"<Super>n","nautilus":"<Super>h","ooimpress":"<Super>i","pidgin":"<Super>p","oocalc":"<Super>x","gedit":"<Super>e","gnome-calculator":"<Super>c","rhythmbox":"<Super>m"}
+            if opciones == "iceweasel":
+                opcion = "firefox"
+            elif opciones == "firefox":
+                opcion = opciones
+            else:
+                opcion = opciones
+        else:
+            if opciones == "firefox":
+                opcion = "iceweasel"
+            else:
+                opcion = opciones
+                
         if interfaz == 0:
             print "Listar accesos rapidos del teclado de gconf"
             print "________________________________________________"
@@ -65,7 +80,7 @@ class Conf:
         print "Listar accesos rapidos del teclado de gconf"
         print "________________________________________________"
         #Se la distribución no es debian se cambia iceweasel por firefox en las variables aplicaciones y teclas.
-        if args.distribucion <> "debian":
+        if distribucion <> "debian":
             self.__aplicaciones = ("orca", "gnome-terminal","oowriter","firefox","nautilus","ooimpress","pidgin","oocalc","gedit","gnome-calculator","rhythmbox")
             self.__teclas = {"orca":"<Super>o","gnome-terminal":"<Super>t","oowriter":"<Super>w","firefox":"<Super>n","nautilus":"<Super>h","ooimpress":"<Super>i","pidgin":"<Super>p","oocalc":"<Super>x","gedit":"<Super>e","gnome-calculator":"<Super>c","rhythmbox":"<Super>m"}
         #Se genera un ciclo según las aplicaciones
@@ -125,7 +140,7 @@ if __name__ == "__main__":
         config.modificar(args.distribucion)
     elif args.accion == "modificarOpcion":
         #Permite modificar una opcion
-        config.modificar_opcion(args.opcion)
+        config.modificar_opcion(args.opcion,args.distribucion)
     else:
         #Si no se pasa ningún argumento se despliega la ayuda
         parser.print_help()
