@@ -15,10 +15,10 @@ Changelog:
  0.3: * Agregado el uso del módulo argparse para simplificar la captura de argumentos del comando.
  0.4: * Agregada la posibilidad de modificar una sóla opción de las teclas rápidas de gconf.
 """
-__version = "0.4"
-__autor = "Ernesto Nadir Crespo Avila"
-__email = "ecrespo@gmail.com"
-__copyright = "GPLv3"
+version = "0.4"
+autor = "Ernesto Nadir Crespo Avila"
+email = "ecrespo@gmail.com"
+copyright = "GPLv3"
 
 #Importar módulo gconf
 import gconf
@@ -128,7 +128,7 @@ if __name__ == "__main__":
     parser.add_argument('-a','--accion',type=str,choices=acciones,default=acciones,help='lista gconf')
     parser.add_argument('-d','--distribucion',choices=distribuciones,type=str,default=distribuciones,help='seleccione entre Canaima,Debian y ubuntu')
     parser.add_argument('-o','--opcion',choices=aplicaciones,type=str,default=aplicaciones,help='Cambia la configuración de una opción')
-    parser.add_argument('-v', '--version', action='version', version='%(prog)s 0.3')
+    parser.add_argument('-v', '--version', action='version', version='%(prog)s 0.4') 
     #Se captura los argumentos del comando ejecutado.
     args = parser.parse_args()
     # ejecución de las opciones según la acción y la distribución
