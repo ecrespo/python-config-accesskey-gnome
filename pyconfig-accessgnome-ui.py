@@ -15,24 +15,28 @@ Changelog:
 
 
 """
-__licencia = "GPLv3"
-__autor = "Ernesto Nadir Crespo Avila"
-__correo = "ecrespo@gmail.com"
+licencia = "GPLv3"
+autor = "Ernesto Nadir Crespo Avila"
+correo = "ecrespo@gmail.com"
 
 
 
 
-
+#Importando el módulo gtk y configGconf
 import gtk,configGconf
 
 
-
+#Creando la clase AccessGnomeConfig
 class AccessGnomeConfig:
+    #Inicializando la clase con el método constructor
 	def __init__(self):
-		self.__glade_file = "pyconfig-accessgnome"
+        #Asignando a una variable el nombre del archivo glade
+		self.__glade_file = "./pyconfig-accessgnome.glade"
+        #Creando el objeto de la clase bulder
 		self.__glade = gtk.Builder()
+        #Asociando el archivo glade al objeto
 		self.__glade.add_from_file(self.__glade_file)
-		# get widgets
+		# Asociando los widgets de la interfaz gráfica 
 		self.__window = self.__glade.get_object('dialog1')
 		self.__button1 = self.__glade.get_object('button1')
 		self.__button2 = self.__glade.get_object('button2')
@@ -49,9 +53,10 @@ class AccessGnomeConfig:
 		self.__checkbutton11 = self.__glade.get_object('checkbutton11')
 		#self.__checkbutton12 = self.__glade.get_object('checkbutton12')
 		self.__checkbutton13 = self.__glade.get_object('checkbutton13')
-		self.__aplicaciones = []
+        #Creando una lista vacía
+        self.__aplicaciones = []
         	
-		# signals
+		# definiendo las señales de los widgets
 		self.__window.connect ("close",self.on_dialog1_close)
 		self.__window.connect("destroy",self.on_dialog1_destroy)
 		self.__button1.connect ("clicked",self.on_button1_clicked)
@@ -69,11 +74,13 @@ class AccessGnomeConfig:
 		self.__checkbutton11.connect("toggled",self.on_checkbutton11_toggled)
 		#self.__checkbutton12.connect("toggled",self.on_checkbutton12_toggled)
 		self.__checkbutton13.connect("toggled",self.on_checkbutton13_toggled)
-		#Config widgets
+		#Confiurando el título de la ventana
 		self.__window.set_title("Configuración de accesos rapidos de Aplicaciones en Gnome")
-		self.__window.show_all()
+        #Se muestra la ventana.
+        self.__window.show_all()
 			
-	def on_checkbutton1_toggled(self,*args):
+    #Definiendo los métodos de los botones de check creados
+    def on_checkbutton1_toggled(self,*args):
 		variable = self.__checkbutton1.get_active()
 		if variable == True:
 			self.__aplicaciones.append("orca")
@@ -160,6 +167,7 @@ class AccessGnomeConfig:
 			print "nada de daltonicos"
 		
     """
+    #Método que elimina aplicaciones seleccionadas
 	def __eliminacion(self,aplicacion):
 		if len(self.__aplicaciones) >= 2:
 			for i in range(len(self.__aplicaciones)):
@@ -206,16 +214,19 @@ class AccessGnomeConfig:
 			self.__checkbutton11.set_active(0)
 			#self.__checkbutton12.set_active(0)
 
-		
+    #Método que cierra la aplicación
 	def on_dialog1_close(self,*args):
 		gtk.main_quit()
 	
+    #Método que cierra la aplicación
 	def on_dialog1_destroy(self,*args):
 		gtk.main_quit()
 	
+    #Método que cierra la aplicación al darle al botón salir
 	def on_button1_clicked(self,*args):
 		gtk.main_quit()
 	
+    #Método que ejecuta la configuración de los accesos rápidos
 	def on_button2_clicked(self,*args):
 		Config = configGconf.Conf()
 		for aplicacion in self.__aplicaciones:
@@ -223,7 +234,7 @@ class AccessGnomeConfig:
 
     
     
-	
+	#Método principal de la clase
 	def main(self):
 		gtk.main()
 		
