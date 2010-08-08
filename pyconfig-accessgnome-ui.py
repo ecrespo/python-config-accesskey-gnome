@@ -31,7 +31,7 @@ class AccessGnomeConfig:
     #Inicializando la clase con el método constructor
 	def __init__(self):
         #Asignando a una variable el nombre del archivo glade
-		self.__glade_file = "./pyconfig-accessgnome.glade"
+		self.__glade_file = "/usr/local/share/python-config-accesskey-gnome/pyconfig-accessgnome.glade"
         #Creando el objeto de la clase bulder
 		self.__glade = gtk.Builder()
         #Asociando el archivo glade al objeto
@@ -53,8 +53,9 @@ class AccessGnomeConfig:
 		self.__checkbutton11 = self.__glade.get_object('checkbutton11')
 		#self.__checkbutton12 = self.__glade.get_object('checkbutton12')
 		self.__checkbutton13 = self.__glade.get_object('checkbutton13')
-        #Creando una lista vacía
-        self.__aplicaciones = []
+		self.__distribucion = self.__glade.get_object('distribucion')
+        	#Creando una lista vacía
+        	self.__aplicaciones = []
         	
 		# definiendo las señales de los widgets
 		self.__window.connect ("close",self.on_dialog1_close)
@@ -76,11 +77,13 @@ class AccessGnomeConfig:
 		self.__checkbutton13.connect("toggled",self.on_checkbutton13_toggled)
 		#Confiurando el título de la ventana
 		self.__window.set_title("Configuración de accesos rapidos de Aplicaciones en Gnome")
-        #Se muestra la ventana.
-        self.__window.show_all()
+		for i in ('debian','ubuntu','canaima'):
+			self.__distribucion.append_text(i)
+        	#Se muestra la ventana.
+        	self.__window.show_all()
 			
-    #Definiendo los métodos de los botones de check creados
-    def on_checkbutton1_toggled(self,*args):
+    	#Definiendo los métodos de los botones de check creados
+    	def on_checkbutton1_toggled(self,*args):
 		variable = self.__checkbutton1.get_active()
 		if variable == True:
 			self.__aplicaciones.append("orca")
@@ -167,7 +170,7 @@ class AccessGnomeConfig:
 			print "nada de daltonicos"
 		
     """
-    #Método que elimina aplicaciones seleccionadas
+    	#Método que elimina aplicaciones seleccionadas
 	def __eliminacion(self,aplicacion):
 		if len(self.__aplicaciones) >= 2:
 			for i in range(len(self.__aplicaciones)):
@@ -214,19 +217,19 @@ class AccessGnomeConfig:
 			self.__checkbutton11.set_active(0)
 			#self.__checkbutton12.set_active(0)
 
-    #Método que cierra la aplicación
+    	#Método que cierra la aplicación
 	def on_dialog1_close(self,*args):
 		gtk.main_quit()
 	
-    #Método que cierra la aplicación
+    	#Método que cierra la aplicación
 	def on_dialog1_destroy(self,*args):
 		gtk.main_quit()
 	
-    #Método que cierra la aplicación al darle al botón salir
+    	#Método que cierra la aplicación al darle al botón salir
 	def on_button1_clicked(self,*args):
 		gtk.main_quit()
 	
-    #Método que ejecuta la configuración de los accesos rápidos
+    	#Método que ejecuta la configuración de los accesos rápidos
 	def on_button2_clicked(self,*args):
 		Config = configGconf.Conf()
 		for aplicacion in self.__aplicaciones:
