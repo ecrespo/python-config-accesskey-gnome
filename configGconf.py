@@ -40,18 +40,21 @@ class Conf:
         if distribucion <> "debian":
             self.__aplicaciones = ("orca", "gnome-terminal","oowriter","firefox","nautilus","ooimpress","pidgin","oocalc","gedit","gnome-calculator","rhythmbox")
             self.__teclas = {"orca":"<Super>o","gnome-terminal":"<Super>t","oowriter":"<Super>w","firefox":"<Super>n","nautilus":"<Super>h","ooimpress":"<Super>i","pidgin":"<Super>p","oocalc":"<Super>x","gedit":"<Super>e","gnome-calculator":"<Super>c","rhythmbox":"<Super>m"}
-            if opciones == "iceweasel":
-                opcion = "firefox"
-            elif opciones == "firefox":
-                opcion = opciones
-            else:
-                opcion = opciones
+            
         else:
-            if opciones == "firefox":
-                opcion = "iceweasel"
-            else:
-                opcion = opciones
-                
+            self.__aplicaciones = ("orca", "gnome-terminal","oowriter","iceweasel","nautilus","ooimpress","pidgin","oocalc","gedit","gnome-calculator","rhythmbox")
+            self.__teclas = {"orca":"<Super>o","gnome-terminal":"<Super>t","oowriter":"<Super>w","iceweasel":"<Super>n","nautilus":"<Super>h","ooimpress":"<Super>i","pidgin":"<Super>p","oocalc":"<Super>x","gedit":"<Super>e","gnome-calculator":"<Super>c","rhythmbox":"<Super>m"}
+            
+        if opciones == "iceweasel" and distribucion == "debian":
+            opcion = opciones
+        elif opciones == "iceweasel" and distribucion <> "debian":
+            opcion = "firefox"
+        elif opciones == "firefox" and distribucion == "debian":
+            opcion = "iceweasel"
+        elif opciones == "firefox" and distribucion <> "debian":
+            opcion = opciones
+        else:
+            opcion = opciones
         if interfaz == 0:
             print "Listar accesos rapidos del teclado de gconf"
             print "________________________________________________"
