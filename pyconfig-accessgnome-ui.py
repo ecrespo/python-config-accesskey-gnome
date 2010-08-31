@@ -12,6 +12,7 @@ Email: ecrespo@gmail.com
 Changelog:
  0.1: * Creado el programa para la interfaz gráfica que permite cambiar las configuración de gconf
  0.2: * Adaptación a la nueva versión de configGconf
+ 0.3: * Modificado el programa y la interfaz para manejar libglade
 
 
 """
@@ -24,6 +25,9 @@ correo = "ecrespo@gmail.com"
 
 #Importando el módulo gtk y configGconf
 import gtk,configGconf
+import pygtk
+pygtk.require('2.0')
+import gtk, gtk.glade, inspect, sys
 
 
 #Creando la clase AccessGnomeConfig
@@ -31,145 +35,117 @@ class AccessGnomeConfig:
     #Inicializando la clase con el método constructor
 	def __init__(self):
         #Asignando a una variable el nombre del archivo glade
-		self.__glade_file = "/usr/local/share/python-config-accesskey-gnome/pyconfig-accessgnome.glade"
+		self.__glade_file = "pyconfig-accessgnome.glade"
         #Creando el objeto de la clase bulder
-		self.__glade = gtk.Builder()
-        #Asociando el archivo glade al objeto
-		self.__glade.add_from_file(self.__glade_file)
+		self.__w_tree = gtk.glade.XML(self.__glade_file)
 		# Asociando los widgets de la interfaz gráfica 
-		self.__window = self.__glade.get_object('dialog1')
-		self.__button1 = self.__glade.get_object('button1')
-		self.__button2 = self.__glade.get_object('button2')
-		self.__checkbutton1 = self.__glade.get_object('checkbutton1')
-		self.__checkbutton2 = self.__glade.get_object('checkbutton2')
-		self.__checkbutton3 = self.__glade.get_object('checkbutton3')
-		self.__checkbutton4 = self.__glade.get_object('checkbutton4')
-		self.__checkbutton5 = self.__glade.get_object('checkbutton5')
-		self.__checkbutton6 = self.__glade.get_object('checkbutton6')
-		self.__checkbutton7 = self.__glade.get_object('checkbutton7')
-		self.__checkbutton8 = self.__glade.get_object('checkbutton8')
-		self.__checkbutton9 = self.__glade.get_object('checkbutton9')
-		self.__checkbutton10 = self.__glade.get_object('checkbutton10')
-		self.__checkbutton11 = self.__glade.get_object('checkbutton11')
-		#self.__checkbutton12 = self.__glade.get_object('checkbutton12')
-		self.__checkbutton13 = self.__glade.get_object('checkbutton13')
-		self.__distribucion = self.__glade.get_object('distribucion')
+		self.__window = self.__w_tree.get_widget('ventana')
+		self.__bsalir = self.__w_tree.get_widget('bsalir')
+		self.__baceptar = self.__w_tree.get_widget('baceptar')
+		self.__orca = self.__w_tree.get_widget('orca')
+		self.__writer = self.__w_tree.get_widget('writer')
+		self.__pidgin = self.__w_tree.get_widget('pidgin')
+		self.__impress = self.__w_tree.get_widget('impress')
+		self.__calc = self.__w_tree.get_widget('calc')
+		self.__terminal = self.__w_tree.get_widget('terminal')
+		self.__nautilus = self.__w_tree.get_widget('nautilus')
+		self.__navegador = self.__w_tree.get_widget('navegador')
+		self.__editor = self.__w_tree.get_widget('editor')
+		self.__calculadora = self.__w_tree.get_widget('calculadora')
+		self.__reproductor = self.__w_tree.get_widget('reproductor')
+		self.__todas = self.__w_tree.get_widget('todas')
+		self.__distribucion = self.__w_tree.get_widget('distribucion')
         	#Creando una lista vacía
         	self.__aplicaciones = []
-        	
-		# definiendo las señales de los widgets
-		self.__window.connect ("close",self.on_dialog1_close)
-		self.__window.connect("destroy",self.on_dialog1_destroy)
-		self.__button1.connect ("clicked",self.on_button1_clicked)
-		self.__button2.connect ("clicked",self.on_button2_clicked)
-		self.__checkbutton1.connect("toggled",self.on_checkbutton1_toggled)
-		self.__checkbutton2.connect("toggled",self.on_checkbutton2_toggled)
-		self.__checkbutton3.connect("toggled",self.on_checkbutton3_toggled)
-		self.__checkbutton4.connect("toggled",self.on_checkbutton4_toggled)
-		self.__checkbutton5.connect("toggled",self.on_checkbutton5_toggled)
-		self.__checkbutton6.connect("toggled",self.on_checkbutton6_toggled)
-		self.__checkbutton7.connect("toggled",self.on_checkbutton7_toggled)
-		self.__checkbutton8.connect("toggled",self.on_checkbutton8_toggled)
-		self.__checkbutton9.connect("toggled",self.on_checkbutton9_toggled)
-		self.__checkbutton10.connect("toggled",self.on_checkbutton10_toggled)
-		self.__checkbutton11.connect("toggled",self.on_checkbutton11_toggled)
-		#self.__checkbutton12.connect("toggled",self.on_checkbutton12_toggled)
-		self.__checkbutton13.connect("toggled",self.on_checkbutton13_toggled)
-		#Confiurando el título de la ventana
-		self.__window.set_title("Configuración de accesos rapidos de Aplicaciones en Gnome")
-		for i in ('debian','ubuntu','canaima'):
-			self.__distribucion.append_text(i)
-        	#Se muestra la ventana.
-        	self.__window.show_all()
+		self.__distribuciones = ""
+		self.__nav_distro = { "debian":"iceweasel","ubuntu":"firefox","canaima":"firefox"}
+		#Se asocia los eventos con las señales
+		self.__w_tree.signal_autoconnect(dict(inspect.getmembers(self)))
+		
+        def on_distribucion_changed(self,*args):
+		self.__distribuciones = self.__distribucion.get_active_text()
+		if self.__distribuciones == "":
+			self.__distribuciones == "debian"
 			
     	#Definiendo los métodos de los botones de check creados
-    	def on_checkbutton1_toggled(self,*args):
-		variable = self.__checkbutton1.get_active()
+    	def on_orca_toggled(self,*args):
+		variable = self.__orca.get_active()
 		if variable == True:
 			self.__aplicaciones.append("orca")
 		else:
 			self.__eliminacion("orca")
 	
-	def on_checkbutton2_toggled(self,*args):
-		variable = self.__checkbutton2.get_active()
+	def on_nautilus_toggled(self,*args):
+		variable = self.__nautilus.get_active()
 		if variable == True:
 			self.__aplicaciones.append("nautilus")
 		else:
 			self.__eliminacion("nautilus")
 			
-	def on_checkbutton3_toggled(self,*args):
-		variable = self.__checkbutton3.get_active()
+	def on_writer_toggled(self,*args):
+		variable = self.__writer.get_active()
 		if  variable == True:
 			self.__aplicaciones.append("oowriter")
 		else:
 			self.__eliminacion("oowriter")
 	
-	def on_checkbutton4_toggled(self,*args):
-		variable = self.__checkbutton4.get_active()
+	def on_navegador_toggled(self,*args):
+		variable = self.__navegador.get_active()
+		if self.__distribuciones.lower() == "":
+			self.__distribuciones = "debian"
 		if  variable == True:
-			self.__aplicaciones.append("iceweasel")
+			self.__aplicaciones.append(self.__nav_distro[self.__distribuciones.lower()])
 		else:
-			self.__eliminacion("iceweasel")
+			self.__eliminacion(self.__nav_distro[self.__distribuciones.lower()])
 			
-	def on_checkbutton5_toggled(self,*args):
-		variable = self.__checkbutton5.get_active()
+	def on_pidgin_toggled(self,*args):
+		variable = self.__pidgin.get_active()
 		if  variable == True:
 			self.__aplicaciones.append("pidgin")
 		else:
 			self.__eliminacion("pidgin")
 	
-	def on_checkbutton6_toggled(self,*args):
-		variable = self.__checkbutton6.get_active()
+	def on_editor_toggled(self,*args):
+		variable = self.__editor.get_active()
 		if  variable == True:
 			self.__aplicaciones.append("gedit")
 		else:
 			self.__eliminacion("gedit")
 		
-	def on_checkbutton7_toggled(self,*args):
-		variable = self.__checkbutton7.get_active()
+	def on_impress_toggled(self,*args):
+		variable = self.__impress.get_active()
 		if  variable == True:
 			self.__aplicaciones.append("ooimpress")
 		else:
 			self.__eliminacion("ooimpress")
 	
-	def on_checkbutton8_toggled(self,*args):
-		variable = self.__checkbutton8.get_active()
+	def on_calculadora_toggled(self,*args):
+		variable = self.__calculadora.get_active()
 		if  variable == True:
 			self.__aplicaciones.append("gnome-calculator")
 		else:
 			self.__eliminacion("gnome-calculator")
 	
-	def on_checkbutton9_toggled(self,*args):
-		variable = self.__checkbutton9.get_active()
+	def on_calc_toggled(self,*args):
+		variable = self.__calc.get_active()
 		if  variable == True:
 			self.__aplicaciones.append("oocalc")
 		else:
 			self.__eliminacion("oocalc")
 			
-	def on_checkbutton10_toggled(self,*args):
-		variable = self.__checkbutton10.get_active()
+	def on_reproductor_toggled(self,*args):
+		variable = self.__reproductor.get_active()
 		if  variable == True:
 			self.__aplicaciones.append("rhythmbox")
 		else:
 			self.__eliminacion("rhythmbox")
 			
-	def on_checkbutton11_toggled(self,*args):
-		variable = self.__checkbutton11.get_active()
+	def on_terminal_toggled(self,*args):
+		variable = self.__terminal.get_active()
 		if  variable == True:
 			self.__aplicaciones.append("gnome-terminal")
 		else:
 			self.__eliminacion("gnome-terminal")
-			
-	"""def on_checkbutton12_toggled(self,*args):
-    
-		
-		variable = self.__checkbutton12.get_active()
-		if  variable == True:
-			print "daltonicos"
-		else:
-			print "nada de daltonicos"
-		
-    """
     	#Método que elimina aplicaciones seleccionadas
 	def __eliminacion(self,aplicacion):
 		if len(self.__aplicaciones) >= 2:
@@ -188,57 +164,58 @@ class AccessGnomeConfig:
 			pass
 				
 			
-	def on_checkbutton13_toggled(self,*args):
-		variable = self.__checkbutton13.get_active()
+	def on_todas_toggled(self,*args):
+		variable = self.__todas.get_active()
 		if  variable == True:
-			self.__checkbutton1.set_active(1)
-			self.__checkbutton2.set_active(1)
-			self.__checkbutton3.set_active(1)
-			self.__checkbutton4.set_active(1)
-			self.__checkbutton5.set_active(1)
-			self.__checkbutton6.set_active(1)
-			self.__checkbutton7.set_active(1)
-			self.__checkbutton8.set_active(1)
-			self.__checkbutton9.set_active(1)
-			self.__checkbutton10.set_active(1)
-			self.__checkbutton11.set_active(1)
-			#self.__checkbutton12.set_active(1)
+			self.__orca.set_active(1)
+			self.__writer.set_active(1)
+			self.__calc.set_active(1)
+			self.__impress.set_active(1)
+			self.__calculadora.set_active(1)
+			self.__reproductor.set_active(1)
+			self.__editor.set_active(1)
+			self.__navegador.set_active(1)
+			self.__nautilus.set_active(1)
+			self.__terminal.set_active(1)
+			self.__pidgin.set_active(1)
+			
 		else:
-			self.__checkbutton1.set_active(0)
-			self.__checkbutton2.set_active(0)
-			self.__checkbutton3.set_active(0)
-			self.__checkbutton4.set_active(0)
-			self.__checkbutton5.set_active(0)
-			self.__checkbutton6.set_active(0)
-			self.__checkbutton7.set_active(0)
-			self.__checkbutton8.set_active(0)
-			self.__checkbutton9.set_active(0)
-			self.__checkbutton10.set_active(0)
-			self.__checkbutton11.set_active(0)
-			#self.__checkbutton12.set_active(0)
+			self.__orca.set_active(0)
+			self.__writer.set_active(0)
+			self.__impress.set_active(0)
+			self.__calc.set_active(0)
+			self.__calculadora.set_active(0)
+			self.__reproductor.set_active(0)
+			self.__editor.set_active(0)
+			self.__terminal.set_active(0)
+			self.__pidgin.set_active(0)
+			self.__navegador.set_active(0)
+			self.__nautilus.set_active(0)
+			
 
+    	
     	#Método que cierra la aplicación
-	def on_dialog1_close(self,*args):
-		gtk.main_quit()
-	
-    	#Método que cierra la aplicación
-	def on_dialog1_destroy(self,*args):
+	def on_ventana_destroy(self,*args):
 		gtk.main_quit()
 	
     	#Método que cierra la aplicación al darle al botón salir
-	def on_button1_clicked(self,*args):
+	def on_bsalir_clicked(self,*args):
 		gtk.main_quit()
 	
+	
     	#Método que ejecuta la configuración de los accesos rápidos
-	def on_button2_clicked(self,*args):
+	def on_baceptar_clicked(self,*args):
 		Config = configGconf.Conf()
 		for aplicacion in self.__aplicaciones:
-			Config.modificar_opcion(aplicacion,1)
+			Config.modificar_opcion(aplicacion,self.__distribuciones.lower())
+			
 
     
     
 	#Método principal de la clase
 	def main(self):
+		#Se muestra la ventana.
+        	self.__window.show()
 		gtk.main()
 		
 		
