@@ -4,9 +4,9 @@
 """
 Name: pyconfig-accessgnome-uy
 Description: Aplicación gráfica que permite configurar los accesos rápidos de teclado a gconf
-Version:0.2
+Version:0.3
 License: GPLv3
-Copyright: Copyright (C) 2009  Distrito Socialista Tecnologico AIT PDVSA Mérida
+Copyright: Copyright (C) 2009  Ernesto Nadir Crespo Avila <ecrespo@gmail.com>
 Author: Ernesto Nadir Crespo Avila
 Email: ecrespo@gmail.com
 Changelog:
@@ -35,7 +35,7 @@ class AccessGnomeConfig:
     #Inicializando la clase con el método constructor
 	def __init__(self):
         #Asignando a una variable el nombre del archivo glade
-		self.__glade_file = "pyconfig-accessgnome.glade"
+		self.__glade_file = "/usr/local/share/python-config-accesskey-gnome/pyconfig-accessgnome.glade"
         #Creando el objeto de la clase bulder
 		self.__w_tree = gtk.glade.XML(self.__glade_file)
 		# Asociando los widgets de la interfaz gráfica 
@@ -207,7 +207,7 @@ class AccessGnomeConfig:
 	def on_baceptar_clicked(self,*args):
 		Config = configGconf.Conf()
 		for aplicacion in self.__aplicaciones:
-			Config.modificar_opcion(aplicacion,self.__distribuciones.lower())
+			Config.modificar_opcion(aplicacion,self.__distribuciones.lower(),1)
 			
 
     
