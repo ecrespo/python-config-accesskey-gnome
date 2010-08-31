@@ -35,8 +35,8 @@ class AccessGnomeConfig:
     #Inicializando la clase con el método constructor
 	def __init__(self):
         #Asignando a una variable el nombre del archivo glade
-		#self.__glade_file = "/usr/local/share/python-config-accesskey-gnome/pyconfig-accessgnome.glade"
-		self.__glade_file = "pyconfig-accessgnome.glade"
+		self.__glade_file = "/usr/local/share/python-config-accesskey-gnome/pyconfig-accessgnome.glade"
+		#self.__glade_file = "pyconfig-accessgnome.glade"
         #Creando el objeto de la clase bulder
 		self.__w_tree = gtk.glade.XML(self.__glade_file)
 		# Asociando los widgets de la interfaz gráfica 
