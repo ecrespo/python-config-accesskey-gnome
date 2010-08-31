@@ -3,7 +3,7 @@
 """
 Name: configGconf
 Description: Aplicación y módulo que permite modificar los accesos rápido de teclas a programas
-Version:0.4
+Version:0.5
 License: GPLv3
 Copyright: Copyright (C) 2009  Distrito Socialista Tecnologico AIT PDVSA Mérida
 Author: Ernesto Nadir Crespo Avila
@@ -14,8 +14,9 @@ Changelog:
       * Agregada información adicional a la hora de desplegar en pantalla.
  0.3: * Agregado el uso del módulo argparse para simplificar la captura de argumentos del comando.
  0.4: * Agregada la posibilidad de modificar una sóla opción de las teclas rápidas de gconf.
+ 0.5: * Agregada la posibilidad de seleccionar navegador dependiendo de la distribucion
 """
-version = "0.4"
+version = "0.5"
 autor = "Ernesto Nadir Crespo Avila"
 email = "ecrespo@gmail.com"
 copyright = "GPLv3"
