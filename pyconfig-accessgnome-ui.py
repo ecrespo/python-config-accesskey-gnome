@@ -35,7 +35,8 @@ class AccessGnomeConfig:
     #Inicializando la clase con el método constructor
 	def __init__(self):
         #Asignando a una variable el nombre del archivo glade
-		self.__glade_file = "/usr/local/share/python-config-accesskey-gnome/pyconfig-accessgnome.glade"
+		#self.__glade_file = "/usr/local/share/python-config-accesskey-gnome/pyconfig-accessgnome.glade"
+		self.__glade_file = "pyconfig-accessgnome.glade"
         #Creando el objeto de la clase bulder
 		self.__w_tree = gtk.glade.XML(self.__glade_file)
 		# Asociando los widgets de la interfaz gráfica 
@@ -55,6 +56,13 @@ class AccessGnomeConfig:
 		self.__reproductor = self.__w_tree.get_widget('reproductor')
 		self.__todas = self.__w_tree.get_widget('todas')
 		self.__distribucion = self.__w_tree.get_widget('distribucion')
+		#ventana de informacion
+		self.__ventana2 = self.__w_tree.get_widget("ventana2")
+		self.__bsalir2 = self.__w_tree.get_widget("bsalir2")
+		self.__informacion = self.__w_tree.get_widget("informacion")
+		self.__ventana2.hide()
+		self.__informacion.set_text("")
+		
         	#Creando una lista vacía
         	self.__aplicaciones = []
 		self.__distribuciones = ""
@@ -198,6 +206,13 @@ class AccessGnomeConfig:
 	def on_ventana_destroy(self,*args):
 		gtk.main_quit()
 	
+	
+	def on_ventana_destroy(self,*args):
+		self.__ventana2.hide()
+		
+	def on_bsalir2_clicked(self,*args):
+		self.__ventana2.hide()
+		
     	#Método que cierra la aplicación al darle al botón salir
 	def on_bsalir_clicked(self,*args):
 		gtk.main_quit()
@@ -206,9 +221,12 @@ class AccessGnomeConfig:
     	#Método que ejecuta la configuración de los accesos rápidos
 	def on_baceptar_clicked(self,*args):
 		Config = configGconf.Conf()
+		self.__info = ""
 		for aplicacion in self.__aplicaciones:
 			Config.modificar_opcion(aplicacion,self.__distribuciones.lower(),1)
-			
+			self.__info = self.__info + aplicacion +","
+		self.__informacion.set_text(self.__info)
+		self.__ventana2.show()
 
     
     
