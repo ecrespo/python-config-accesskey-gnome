@@ -1,0 +1,1 @@
+Allow config keyboard access application with gconf
